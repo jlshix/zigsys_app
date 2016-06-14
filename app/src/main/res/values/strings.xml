@@ -1,4 +1,19 @@
 <resources>
     <string name="app_name">ZigSys</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_device">DeviceActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="envir_frag">环境 Fragment</string>
+    <string name="plug_frag">插座 fragment</string>
+    <string name="light_frag">光照 Fragment</string>
+    <string name="msg_frag">消息 Fragment</string>
+
+    <array name="frag_title">
+        <item>环境</item>
+        <item>插座</item>
+        <item>灯光</item>
+        <item>消息</item>
+    </array>
 </resources>
