@@ -26,7 +26,9 @@
             android:name=".DeviceActivity"
             android:label="@string/title_activity_device"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".GateBindActivity"
+            android:label="@string/bind_gate"/>
     </application>
 
 </manifest>

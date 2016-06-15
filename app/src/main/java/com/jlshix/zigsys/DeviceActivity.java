@@ -104,6 +104,7 @@ public class DeviceActivity extends BaseActivity {
 
             }
         });
+        vp.setOffscreenPageLimit(3);
         tabs.setupWithViewPager(vp);
     }
 

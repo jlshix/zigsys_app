@@ -3,16 +3,14 @@ package com.jlshix.zigsys;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.animation.Interpolator;
-import android.widget.Toast;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.jlshix.zigsys.utils.L;
 
@@ -40,6 +38,10 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     @ViewInject(R.id.swipe)
     private SwipeRefreshLayout swipe;
 
+    // spinner for mode
+    @ViewInject(R.id.mode_spinner)
+    private Spinner spinner;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +49,8 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         swipe.setOnRefreshListener(this);
-
+        spinner.setAdapter(new ArrayAdapter<>(this, R.layout.spinner,
+                getResources().getStringArray(R.array.mode)));
     }
 
     // device OnClickListener
@@ -61,7 +64,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     // fab OnClickListener
     @Event(R.id.fab)
     private void addGate(View v) {
-        L.toast(getApplication(), "add gate");
+        startActivity(new Intent(getApplicationContext(), GateBindActivity.class));
     }
 
 
@@ -91,18 +94,6 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     @Override
     public void onRefresh() {
         L.toast(getApplication(), "Refreshing");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(3000);
-                    if (swipe.isRefreshing()) {
-                        swipe.setRefreshing(false);
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).run();
+
     }
 }
