@@ -7,13 +7,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.jlshix.zigsys.frag.Envir;
 import com.jlshix.zigsys.frag.Light;
 import com.jlshix.zigsys.frag.Msg;
 import com.jlshix.zigsys.frag.Plug;
+import com.jlshix.zigsys.utils.L;
 
 import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 @ContentView(R.layout.activity_device)
@@ -102,6 +105,11 @@ public class DeviceActivity extends BaseActivity {
             }
         });
         tabs.setupWithViewPager(vp);
+    }
+
+    @Event(R.id.fab)
+    private void addDevice(View v) {
+        L.toast(getApplication(), "add device");
     }
 
 }

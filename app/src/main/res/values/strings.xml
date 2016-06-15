@@ -9,6 +9,8 @@
     <string name="plug_frag">插座 fragment</string>
     <string name="light_frag">光照 Fragment</string>
     <string name="msg_frag">消息 Fragment</string>
+    <string name="weather">天气</string>
+    <string name="device">设备</string>
 
     <array name="frag_title">
         <item>环境</item>
