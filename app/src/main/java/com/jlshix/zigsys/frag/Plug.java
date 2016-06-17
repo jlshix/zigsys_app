@@ -14,7 +14,6 @@ import com.jlshix.zigsys.BaseFragment;
 import com.jlshix.zigsys.R;
 import com.jlshix.zigsys.adapter.PlugAdapter;
 import com.jlshix.zigsys.data.PlugData;
-import com.jlshix.zigsys.utils.DividerItemDecoration;
 import com.jlshix.zigsys.utils.L;
 
 import org.json.JSONArray;

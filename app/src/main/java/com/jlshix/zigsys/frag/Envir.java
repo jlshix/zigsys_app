@@ -9,15 +9,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 
 import com.jlshix.zigsys.BaseFragment;
 import com.jlshix.zigsys.R;
 import com.jlshix.zigsys.adapter.EnvirAdapter;
 import com.jlshix.zigsys.data.EnvirData;
-import com.jlshix.zigsys.data.PlugData;
-import com.jlshix.zigsys.utils.DividerItemDecoration;
 import com.jlshix.zigsys.utils.L;
 
 import org.json.JSONArray;
@@ -30,9 +26,7 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Leo on 2016/6/14.
