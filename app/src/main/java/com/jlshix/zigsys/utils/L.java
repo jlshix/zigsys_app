@@ -9,6 +9,10 @@ import android.widget.Toast;
  */
 public class L {
 
+    //请求网址
+    public static String URL_GET_MSG = "http://jlshix.com/zigsys/get_msg.php/";
+    public static String URL_GET = "http://jlshix.com/zigsys/get.php/";
+    public static String URL_SET = "http://jlshix.com/zigsys/set.php/";
     // 简洁Toast
     public static void toast(Context c, String s) {
         Toast.makeText(c, s, Toast.LENGTH_LONG).show();
