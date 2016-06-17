@@ -23,6 +23,13 @@
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
+    <style name="ListCardStyle">
+        <item name="android:clickable">true</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+    </style>
+
+
+
     <dimen name="card_padding">7dp</dimen>
     <dimen name="card_elevation">4dp</dimen>
 </resources>
