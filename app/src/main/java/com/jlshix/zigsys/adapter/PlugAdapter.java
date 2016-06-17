@@ -106,6 +106,7 @@ public class PlugAdapter extends RecyclerView.Adapter<PlugAdapter.PlugViewHolder
                     state = bool2String(tmp);
                     // TODO 十个以内
                     String no = "0"+(finalPosition+1);
+                    //TODO 仅完成pwm推送命令 其它继续
                     upload2Server(no, state);
                 }
             });
@@ -117,6 +118,7 @@ public class PlugAdapter extends RecyclerView.Adapter<PlugAdapter.PlugViewHolder
         String URL = L.URL_SET + "?gate=4718&type=0A&no=" + no + "&state=" + state;
         Log.e(TAG, "uploadToServer: " + URL);
         RequestParams params = new RequestParams(URL);
+//        L.send2Gate(L.GATE_TAG, "0A" + no);
         x.http().get(params, new Callback.CommonCallback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject result) {

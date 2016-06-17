@@ -80,6 +80,11 @@ public class LightAdapter extends RecyclerView.Adapter<LightAdapter.LightViewHol
     private void uploadToServer(int position, int progress) {
         String URL = L.URL_SET + "?gate=4718&type=09&no=0" + (position+1) + "&state=" + progress;
         Log.e(TAG, "uploadToServer: " + URL);
+        String msg = "090" + (position + 1) + "0" + progress;
+
+        // 推送
+        L.send2Gate(L.GATE_TAG, msg);
+        // 数据库
         RequestParams params = new RequestParams(URL);
         x.http().get(params, new Callback.CommonCallback<JSONObject>() {
             @Override
