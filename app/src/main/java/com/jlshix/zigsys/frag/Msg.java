@@ -60,10 +60,14 @@ public class Msg extends BaseFragment implements SwipeRefreshLayout.OnRefreshLis
         super.onViewCreated(view, savedInstanceState);
         swipe.setOnRefreshListener(this);
         getMsg();
+
     }
 
+    /**
+     * 获取消息列表
+     */
     private void getMsg() {
-        RequestParams params = new RequestParams("http://jlshix.com/zigsys/get_msg.php?gate=3345&type=1");
+        RequestParams params = new RequestParams(L.URL_GET_MSG + "?gate=3345&type=1");
         x.http().get(params,
                 new Callback.CommonCallback<String>() {
                     @Override
@@ -82,6 +86,11 @@ public class Msg extends BaseFragment implements SwipeRefreshLayout.OnRefreshLis
                         }
                     }
 
+                    /**
+                     * 将消息显示到ListView
+                     * @param info jsonArray
+                     * @param list ListView
+                     */
                     private void setList(JSONArray info, ListView list) {
                         List<Map<String, String>> items = new ArrayList<>();
                         for (int i = 0; i < info.length(); i++) {
@@ -114,6 +123,9 @@ public class Msg extends BaseFragment implements SwipeRefreshLayout.OnRefreshLis
                 });
     }
 
+    /**
+     * 下拉刷新
+     */
     @Override
     public void onRefresh() {
         swipe.setRefreshing(true);
