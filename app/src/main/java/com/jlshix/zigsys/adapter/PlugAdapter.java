@@ -35,6 +35,7 @@ public class PlugAdapter extends RecyclerView.Adapter<PlugAdapter.PlugViewHolder
     private static final String TAG = "PLUG_ADAPTER";
     // 上下文 与 数据
     private Context context;
+    // handler 用于发送消息刷新
     private Handler handler;
     private List<PlugData> datas;
 
@@ -88,26 +89,41 @@ public class PlugAdapter extends RecyclerView.Adapter<PlugAdapter.PlugViewHolder
      */
     @Override
     public void onBindViewHolder(final PlugAdapter.PlugViewHolder holder, int position) {
+        // 每个单元是一个开关组 0123
         for (int i = 0; i < holder.mSwitch.length; i++) {
+            // 从获取的数据初始化状态
             holder.mSwitch[i].setChecked(datas.get(position).getState(i));
             holder.place.setText(datas.get(position).getName());
+            // I为单元内计数
             final int finalI = i;
+            // Position为第几单元计数
             final int finalPosition = position;
+
+            //为每一个单元内的每一个开关设置监听器
             holder.mSwitch[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                    L.toast(context, "mSwitch " + finalI + " " + finalPosition + isChecked);
                     Log.e(TAG, "onCheckedChanged: "+"mSwitch " + finalI + " " + finalPosition +" " + isChecked);
-                    String state = "0000";
+
+                    //获取编号  TODO 现在只是十个以内
+                    String no = "0"+(finalPosition+1);
+
+                    // 获取每个单元的开关状态
+                    String state;
                     boolean[] tmp = new boolean[4];
                     for (int i = 0; i < holder.mSwitch.length; i++) {
                         tmp[i] = holder.mSwitch[i].isChecked();
                     }
                     state = bool2String(tmp);
-                    // TODO 十个以内
-                    String no = "0"+(finalPosition+1);
-                    //TODO 仅完成pwm推送命令 其它继续
+
+                    // 更新数据库
                     upload2Server(no, state);
+
+                    // 推送
+                    String b = isChecked ? "1":"0";
+                    String order = "0A0" + (finalPosition + 1) + (finalI + 1) + b;
+                    L.send2Gate(L.GATE_TAG, order);
+
                 }
             });
         }
