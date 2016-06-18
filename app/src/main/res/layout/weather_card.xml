@@ -8,6 +8,7 @@
     <TextView
         android:id="@+id/temp"
         android:text="@string/temp"
+        android:textSize="28sp"
         android:gravity="center"
         android:layout_weight="1"
         android:layout_width="0dp"
@@ -41,7 +42,7 @@
 
     <ImageView
         android:id="@+id/weather_pic"
-        android:src="@drawable/clear"
+        android:src="@drawable/clear_day"
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="match_parent" />
