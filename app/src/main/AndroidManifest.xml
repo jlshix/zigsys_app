@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jlshix.zigsys">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
     <!-- Required 自定义用来收发消息的相关权限 -->
     <permission
         android:name="${applicationId}.permission.JPUSH_MESSAGE"
