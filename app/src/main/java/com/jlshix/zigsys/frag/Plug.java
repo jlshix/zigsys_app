@@ -114,15 +114,12 @@ public class Plug extends BaseFragment implements SwipeRefreshLayout.OnRefreshLi
 
                     private void json2List(JSONArray info) {
                         list.clear();
-                        Log.i(TAG, "json2List: " + info.length());
                         for (int i = 0; i < info.length(); i++) {
                             JSONObject object = info.optJSONObject(i);
                             String name = object.optString("name");
                             String state = object.optString("state");
                             list.add(new PlugData(name, state));
-                            Log.i(TAG, "json2List: " + list.toString());
                         }
-                        Log.i(TAG, "json2List: " + list.toString());
                     }
 
                     @Override
