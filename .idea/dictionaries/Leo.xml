@@ -4,6 +4,8 @@
       <w>datas</w>
       <w>envir</w>
       <w>humi</w>
+      <w>realtime</w>
+      <w>skycon</w>
     </words>
   </dictionary>
 </component>
