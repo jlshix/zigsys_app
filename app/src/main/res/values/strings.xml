@@ -16,6 +16,7 @@
     <string name="summary">summary</string>
     <string name="gate_imei_text">网关的序列号: (可扫描二维码获取)</string>
     <string name="gate_name_text">请给您的网关起个名字:</string>
+    <string name="device_name_text">请给您的设备起个名字:</string>
     <string name="gate_name_1">我的设备</string>
     <string name="gate_name_2">我家主控</string>
     <string name="gate_name_3">客厅网关</string>
@@ -33,11 +34,17 @@
     <string name="offline">offline</string>
     <string name="line">gate online or offline</string>
     <string name="no_device">您还没有绑定网关，请点击 “+” 绑定网关</string>
+    <string name="device_imei_text">设备的序列号: (可扫描二维码获取)</string>
+    <string name="device_name_1">客厅-</string>
+    <string name="device_name_2">卧室-</string>
+    <string name="device_name_3">书房-</string>
+    <string name="device_type">设备类型: </string>
 
     <array name="frag_title">
         <item>环境</item>
         <item>插座</item>
         <item>灯光</item>
+        <item>其它</item>
         <item>消息</item>
     </array>
 

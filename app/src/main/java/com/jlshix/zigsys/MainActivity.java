@@ -4,12 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -220,7 +218,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
                 return true;
             }
             Intent intent = new Intent(getApplicationContext(), GateBindActivity.class);
-            startActivityForResult(intent, L.SCAN_REQUEST);
+            startActivityForResult(intent, L.ADD_REQUEST);
             return true;
         }
 
@@ -230,7 +228,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == L.SCAN_REQUEST && resultCode == L.SCAN_RETURN) {
+        if (requestCode == L.ADD_REQUEST && resultCode == L.ADD_RETURN) {
             showCard();
             handler.sendEmptyMessage(REFRESH);
         }
@@ -295,7 +293,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                L.toast(MainActivity.this, ex.getMessage());
             }
 
             @Override
