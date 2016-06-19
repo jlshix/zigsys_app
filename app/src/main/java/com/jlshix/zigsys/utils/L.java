@@ -12,6 +12,8 @@ import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.jlshix.zigsys.App;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
@@ -27,17 +29,63 @@ import java.text.DecimalFormat;
 public class L {
 
     private static final String TAG = "UTIL_L";
+    public static final int SCAN_REQUEST = 1000;
+    public static final int SCAN_RETURN = 2000;
     //请求网址
     public static String URL_GET_MSG = "http://jlshix.com/zigsys/get_msg.php/";
     public static String URL_GET = "http://jlshix.com/zigsys/get.php/";
     public static String URL_SET = "http://jlshix.com/zigsys/set.php/";
     public static String URL_PUSH = "http://jlshix.com/zigsys/togate.php/";
+    public static String URL_SET_GATE = "http://jlshix.com/zigsys/set_gate.php/";
     public static final java.lang.String URL_WEATHER = "https://api.caiyunapp.com/v2/X6f3oc9bahTuV6Bv/";
     public static final java.lang.String URL_GATE = "http://jlshix.com/zigsys/get_gate.php/";
+    public static final java.lang.String URL_GATE_BIND = "http://jlshix.com/zigsys/bind_gate.php/";
 
 
+    /**
+     * 客户端目前只有一个，设为zzh 后期可拓展
+     */
     public static String GATE_TAG = "zzh";
+    public static String GATE_IMEI = "4718";
+    public static boolean BIND = false;
     public static String MAIL = "jlshix@163.com";
+
+    public static String getGateImei() {
+        return App.sp.getString("gateImei", "x");
+    }
+
+    public static void setGateImei(String gateImei) {
+        GATE_IMEI = gateImei;
+        App.sp.edit().putString("gateImei", gateImei).apply();
+    }
+
+    public static boolean isBIND() {
+        return App.sp.getBoolean("bind", false);
+    }
+
+    public static void setBIND(boolean BIND) {
+        L.BIND = BIND;
+        App.sp.edit().putBoolean("bind", BIND).apply();
+    }
+
+    public static String getMAIL() {
+        return App.sp.getString("mail", "x");
+    }
+
+    public static void setMAIL(String MAIL) {
+        L.MAIL = MAIL;
+        App.sp.edit().putString("mail", MAIL).apply();
+    }
+
+    public static String getGateTag() {
+        return GATE_TAG;
+    }
+
+    public static void setGateTag(String gateTag) {
+        GATE_TAG = gateTag;
+    }
+
+
 
     // 简洁Toast
     public static void toast(Context c, String s) {
