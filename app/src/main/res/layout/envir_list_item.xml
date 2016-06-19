@@ -20,20 +20,24 @@
             android:layout_height="match_parent">
             <TextView
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:padding="5dp"
                 android:id="@+id/place"
                 android:text="@string/about"
                 android:textSize="18sp"
+                android:gravity="center"
                 android:textColor="@color/colorPrimary"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="36dp" />
             <TextView
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:paddingTop="5dp"
                 android:id="@+id/statistics"
+                android:layout_alignParentEnd="true"
+                android:drawableEnd="@drawable/ic_poll_blue_500_48dp"
                 android:text="@string/statistics"
                 android:textSize="14sp"
+                android:gravity="center"
                 android:textColor="@color/colorAccent"
-                android:layout_alignParentEnd="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </RelativeLayout>

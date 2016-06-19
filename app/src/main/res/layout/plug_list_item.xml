@@ -33,6 +33,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ImageView
+                android:src="@drawable/ic_power_blue_500_48dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent" />
+
             <Switch
                 android:id="@+id/s0"
                 android:layout_weight="1"
