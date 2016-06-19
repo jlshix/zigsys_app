@@ -2,8 +2,6 @@
     <string name="app_name">ZigSys</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_device">DeviceActivity</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="envir_frag">环境 Fragment</string>
     <string name="plug_frag">插座 fragment</string>
@@ -16,7 +14,7 @@
     <string name="place">地点</string>
     <string name="title">title</string>
     <string name="summary">summary</string>
-    <string name="gate_imei_text">网关的序列号是:</string>
+    <string name="gate_imei_text">网关的序列号: (可扫描二维码获取)</string>
     <string name="gate_name_text">请给您的网关起个名字:</string>
     <string name="gate_name_1">我的设备</string>
     <string name="gate_name_2">我家主控</string>
@@ -31,6 +29,10 @@
     <string name="light_sub">光照</string>
     <string name="add_dev">添加设备</string>
     <string name="zero">0</string>
+    <string name="online">Online</string>
+    <string name="offline">offline</string>
+    <string name="line">gate online or offline</string>
+    <string name="no_device">您还没有绑定网关，请点击 “+” 绑定网关</string>
 
     <array name="frag_title">
         <item>环境</item>
