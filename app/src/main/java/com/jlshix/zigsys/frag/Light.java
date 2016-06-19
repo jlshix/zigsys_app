@@ -92,7 +92,7 @@ public class Light extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
      */
     private void getData() {
         list.clear();
-        RequestParams params = new RequestParams(L.URL_GET + "?gate=4718&type=09");
+        RequestParams params = new RequestParams(L.URL_GET + "?gate=" + L.getGateImei() + "&type=09");
         x.http().get(params,
                 new Callback.CommonCallback<String>() {
                     @Override

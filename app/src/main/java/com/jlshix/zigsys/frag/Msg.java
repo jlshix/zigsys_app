@@ -67,7 +67,7 @@ public class Msg extends BaseFragment implements SwipeRefreshLayout.OnRefreshLis
      * 获取消息列表
      */
     private void getMsg() {
-        RequestParams params = new RequestParams(L.URL_GET_MSG + "?gate=3345&type=1");
+        RequestParams params = new RequestParams(L.URL_GET_MSG + "?gate="+ L.getGateImei() + "&type=0");
         x.http().get(params,
                 new Callback.CommonCallback<String>() {
                     @Override

@@ -92,7 +92,7 @@ public class Plug extends BaseFragment implements SwipeRefreshLayout.OnRefreshLi
      */
     private void getData() {
         list.clear();
-        RequestParams params = new RequestParams(L.URL_GET + "?gate=4718&type=0A");
+        RequestParams params = new RequestParams(L.URL_GET + "?gate=" + L.getGateImei() + "&type=0A");
         x.http().get(params,
                 new Callback.CommonCallback<String>() {
                     @Override
