@@ -1,6 +1,7 @@
 package com.jlshix.zigsys;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 
 import org.xutils.x;
 
@@ -14,6 +15,9 @@ import cn.jpush.android.api.JPushInterface;
  * App类
  */
 public class App extends Application {
+
+    public static SharedPreferences sp;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -28,6 +32,8 @@ public class App extends Application {
         Set<String> tags = new HashSet<>();
         tags.add("jlshix");
         JPushInterface.setTags(getApplicationContext(), tags, null);
+
+        sp = getSharedPreferences("conf", MODE_PRIVATE);
 
     }
 }
