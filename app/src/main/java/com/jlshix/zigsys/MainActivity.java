@@ -5,12 +5,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -31,9 +34,7 @@ import org.xutils.x;
 @ContentView(R.layout.activity_main)
 public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener{
 
-    // fab button
-    @ViewInject(R.id.fab)
-    private FloatingActionButton fab;
+    private static final String TAG = "MAIN_ACTIVITY";
 
     //swipe
     @ViewInject(R.id.swipe)
@@ -59,7 +60,9 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     @ViewInject(R.id.weather_pic)
     private ImageView weatherPic;
 
-
+    // no_device
+    @ViewInject(R.id.no_device_card)
+    private CardView noDevice;
 
     // device
     @ViewInject(R.id.device)
@@ -71,9 +74,18 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     @ViewInject(R.id.summary)
     private TextView gateState;
 
+    @ViewInject(R.id.line)
+    private ImageView line;
+
     // spinner for mode
     @ViewInject(R.id.mode_spinner)
     private Spinner spinner;
+    // 是否主动选定 暂时未实现主动被动的选定
+    private boolean positive = true;
+    // 是否第一次启动 用于初始化spinner时不发命令
+    private boolean isFirst = true;
+    // 是否已绑定设备，用于设定卡片的显示
+    private boolean bind = L.isBIND();
 
 
     // handler
@@ -84,7 +96,9 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
             switch (msg.what) {
                 case REFRESH:
                     updateWeather();
-                    updateGate();
+                    if (L.isBIND()) {
+                        updateGate();
+                    }
                     swipe.setRefreshing(false);
                     break;
             }
@@ -98,10 +112,81 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         super.onCreate(savedInstanceState);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        showCard();
+
+        line.setEnabled(false);
         swipe.setOnRefreshListener(this);
         spinner.setAdapter(new ArrayAdapter<>(this, R.layout.spinner,
                 getResources().getStringArray(R.array.mode)));
+//        spinner.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                positive = true;
+//                Log.e(TAG, "onClick: " + positive);
+//            }
+//        });
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (positive) {
+                    changeMode(position);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         handler.sendEmptyMessage(REFRESH);
+    }
+
+    private void showCard() {
+        if (!L.isBIND()) {
+            noDevice.setVisibility(View.VISIBLE);
+            device.setVisibility(View.GONE);
+        } else {
+            noDevice.setVisibility(View.GONE);
+            device.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
+     * 更改模式
+     * @param position 模式编号
+     */
+    private void changeMode(int position) {
+        if (isFirst) {
+            isFirst = false;
+            return;
+        }
+        // 推送 模式标志为1 始于1 (1 日常) (2 观影) (3 睡眠) (4 外出) (5 夜间)
+        L.send2Gate(L.GATE_TAG, "1" + (position + 1) + "0000");
+        // 数据库
+        RequestParams params = new RequestParams(L.URL_SET_GATE + "?imei=" + L.getGateImei() +"&mode=" + (position+1));
+        x.http().get(params, new Callback.CommonCallback<JSONObject>() {
+            @Override
+            public void onSuccess(JSONObject result) {
+                Snackbar.make(spinner, "模式已更改", Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Snackbar.make(spinner, "模式更改失败，请稍候重试", Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+        // 改回被动
+//        positive = false;
     }
 
     // device OnClickListener
@@ -110,12 +195,6 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     private void toDeviceActivity(View v) {
         Intent intent = new Intent(MainActivity.this, DeviceActivity.class);
         startActivity(intent);
-    }
-
-    // fab OnClickListener
-    @Event(R.id.fab)
-    private void addGate(View v) {
-        startActivity(new Intent(getApplicationContext(), GateBindActivity.class));
     }
 
 
@@ -135,11 +214,26 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_add) {
+            if (L.isBIND()) {
+                L.toast(MainActivity.this, "目前仅支持一台设备，可长按删除并绑定新设备");
+                return true;
+            }
+            Intent intent = new Intent(getApplicationContext(), GateBindActivity.class);
+            startActivityForResult(intent, L.SCAN_REQUEST);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == L.SCAN_REQUEST && resultCode == L.SCAN_RETURN) {
+            showCard();
+            handler.sendEmptyMessage(REFRESH);
+        }
     }
 
     @Override
@@ -220,11 +314,15 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         name.setText(info.getName());
         if (info.getOnline().equals("1")){
             gateState.setText(R.string.online);
+            line.setEnabled(true);
         } else {
             gateState.setText(R.string.offline);
+            line.setEnabled(false);
         }
         int index = Integer.valueOf(info.getMode());
-        spinner.setSelection(index - 1);
+        // 不是用户主动发起
+//        positive = false;
+//        spinner.setSelection(index - 1);
     }
 
     private void setWeatherCard(JSONObject object) {
