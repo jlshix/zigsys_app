@@ -27,11 +27,24 @@
                     android:text="@string/gate_imei_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
-                <EditText
-                    android:id="@+id/gate_imei"
-                    android:inputType="none"
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:id="@+id/gate_imei"
+                        android:inputType="none"
+                        android:layout_width="0dp"
+                        android:layout_weight="7"
+                        android:layout_height="wrap_content" />
+                    <Button
+                        android:id="@+id/scan"
+                        android:background="@null"
+                        android:drawableStart="@drawable/btn_selector_scan"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
