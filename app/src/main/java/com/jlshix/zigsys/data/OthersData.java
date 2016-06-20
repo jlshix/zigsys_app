@@ -3,39 +3,46 @@ package com.jlshix.zigsys.data;
 
 /**
  * Created by Leo on 2016/6/16.
- * 环境数据 Recycler 调用进行初始化
+ * 其它传感器数据 Recycler 调用进行初始化
  */
 public class OthersData {
 
+    private String type;
+    private String no;
     private String place;
-    private String temp;
-    private String humi;
-    private String light;
-
-    public OthersData(String place, String state) {
-        // 01020304
-        // 01234567
-        this.place = place;
-        this.temp = state.substring(0, 2) + "°";
-        this.humi = state.substring(2, 4) + "%";
-        this.light = state.substring(4) + "lx";
-    }
+    private String state;
 
     public OthersData() {
-        this.place = "未指定";
-        this.temp = "--°";
-        this.humi = "--%";
-        this.light = "----lx";
+        this.type = "04";
+        this.no = "01";
+        this.place = "客厅-烟雾";
+        this.state = "0";
     }
 
-    public OthersData(String place, String temp, String humi, String light) {
 
+    public OthersData(String type, String no, String place, String state) {
+
+        this.type = type;
+        this.no = no;
         this.place = place;
-        this.temp = temp;
-        this.humi = humi;
-        this.light = light;
+        this.state = state;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getNo() {
+        return no;
+    }
+
+    public void setNo(String no) {
+        this.no = no;
+    }
 
     public String getPlace() {
         return place;
@@ -45,28 +52,11 @@ public class OthersData {
         this.place = place;
     }
 
-    public String getTemp() {
-        return temp;
+    public String getState() {
+        return state;
     }
 
-    public void setTemp(String temp) {
-        this.temp = temp;
+    public void setState(String state) {
+        this.state = state;
     }
-
-    public String getHumi() {
-        return humi;
-    }
-
-    public void setHumi(String humi) {
-        this.humi = humi;
-    }
-
-    public String getLight() {
-        return light;
-    }
-
-    public void setLight(String light) {
-        this.light = light;
-    }
-
 }

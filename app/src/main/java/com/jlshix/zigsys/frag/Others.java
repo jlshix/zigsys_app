@@ -11,8 +11,8 @@ import android.view.View;
 
 import com.jlshix.zigsys.BaseFragment;
 import com.jlshix.zigsys.R;
-import com.jlshix.zigsys.adapter.EnvirAdapter;
-import com.jlshix.zigsys.data.EnvirData;
+import com.jlshix.zigsys.adapter.OthersAdapter;
+import com.jlshix.zigsys.data.OthersData;
 import com.jlshix.zigsys.utils.L;
 
 import org.json.JSONArray;
@@ -35,7 +35,7 @@ import java.util.List;
 @ContentView(R.layout.fragment_others)
 public class Others extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener{
 
-    private static final String TAG = "ENVIR_FRAG";
+    private static final String TAG = "OTHERS_FRAG";
     @ViewInject(R.id.recycler)
     private RecyclerView recycler;
 
@@ -43,12 +43,14 @@ public class Others extends BaseFragment implements SwipeRefreshLayout.OnRefresh
     private SwipeRefreshLayout swipe;
 
     // 准备的数据
-    private List<EnvirData> list;
+    private List<OthersData> list;
 
     // Adapter
-    private EnvirAdapter adapter;
-
-    private static final int REFRESH = 0x01;
+    private OthersAdapter adapter;
+//    private int listSize;
+    public static final int REFRESH = 0x01;
+    public static final int CODE_ERR = 0x02;
+    public static final int HTTP_ERR = 0x03;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -67,17 +69,18 @@ public class Others extends BaseFragment implements SwipeRefreshLayout.OnRefresh
         super.onViewCreated(view, savedInstanceState);
         swipe.setOnRefreshListener(this);
         list = new ArrayList<>();
-        list.add(new EnvirData());
+        list.add(new OthersData());
+//        listSize = list.size();
         initView();
     }
 
     private void initView() {
-        adapter = new EnvirAdapter(getContext(), list);
+        adapter = new OthersAdapter(getContext(), handler, list);
         recycler.setHasFixedSize(true);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         recycler.setAdapter(adapter);
         recycler.setItemAnimator(new DefaultItemAnimator());
-        adapter.notifyItemRangeChanged(0, list.size());
+        adapter.notifyDataSetChanged();
         handler.sendEmptyMessage(REFRESH);
     }
 
@@ -86,7 +89,9 @@ public class Others extends BaseFragment implements SwipeRefreshLayout.OnRefresh
      */
     private void getData() {
         list.clear();
-        RequestParams params = new RequestParams(L.URL_GET + "?gate=" + L.getGateImei() + "&type=02");
+//        adapter.notifyItemRangeRemoved(0, listSize);
+//        adapter.notifyItemRangeChanged(0, 0);
+        RequestParams params = new RequestParams(L.URL_GET + "?gate=" + L.getGateImei() + "&type=00");
         x.http().get(params,
                 new Callback.CommonCallback<String>() {
                     @Override
@@ -94,12 +99,14 @@ public class Others extends BaseFragment implements SwipeRefreshLayout.OnRefresh
                         try {
                             JSONObject object = new JSONObject(result);
                             if (!object.optString("code").equals("1")) {
-                                L.toast(getContext(), "PLUG_CODE_ERR");
+                                L.toast(getContext(), "OTHERS_CODE_ERR");
                                 return;
                             }
                             json2List(object.optJSONArray("info"));
+//                            listSize = list.size();
+//                            adapter.notifyItemRangeInserted(0, listSize);
                             adapter.notifyDataSetChanged();
-                            adapter.notifyItemRangeChanged(0, list.size());
+//                            adapter.notifyItemRangeChanged(0, listSize);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -110,9 +117,11 @@ public class Others extends BaseFragment implements SwipeRefreshLayout.OnRefresh
                         list.clear();
                         for (int i = 0; i < info.length(); i++) {
                             JSONObject object = info.optJSONObject(i);
+                            String type = object.optString("type");
+                            String no = object.optString("no");
                             String name = object.optString("name");
                             String state = object.optString("state");
-                            list.add(new EnvirData(name, state));
+                            list.add(new OthersData(type, no, name, state));
                         }
                     }
 
