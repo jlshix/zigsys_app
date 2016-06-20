@@ -29,8 +29,12 @@ import java.text.DecimalFormat;
 public class L {
 
     private static final String TAG = "UTIL_L";
+    public static final int ADD_REQUEST = 1000;
+    public static final int ADD_RETURN = 2000;
     public static final int SCAN_REQUEST = 1000;
     public static final int SCAN_RETURN = 2000;
+
+
     //请求网址
     public static String URL_GET_MSG = "http://jlshix.com/zigsys/get_msg.php/";
     public static String URL_GET = "http://jlshix.com/zigsys/get.php/";
@@ -40,8 +44,7 @@ public class L {
     public static final java.lang.String URL_WEATHER = "https://api.caiyunapp.com/v2/X6f3oc9bahTuV6Bv/";
     public static final java.lang.String URL_GATE = "http://jlshix.com/zigsys/get_gate.php/";
     public static final java.lang.String URL_GATE_BIND = "http://jlshix.com/zigsys/bind_gate.php/";
-
-
+    public static final String URL_ADD_DEV = "http://jlshix.com/zigsys/add_dev.php/";
     /**
      * 客户端目前只有一个，设为zzh 后期可拓展
      */
