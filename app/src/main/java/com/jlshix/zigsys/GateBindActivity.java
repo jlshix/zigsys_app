@@ -90,7 +90,7 @@ public class GateBindActivity extends BaseActivity {
                         L.setBIND(true);
                         L.setGateImei(gateImei1);
                         // 结束
-                        GateBindActivity.this.setResult(L.SCAN_RETURN);
+                        GateBindActivity.this.setResult(L.ADD_RETURN);
                         GateBindActivity.this.finish();
 
                     }

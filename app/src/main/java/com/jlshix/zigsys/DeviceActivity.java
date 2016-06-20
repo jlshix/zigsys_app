@@ -1,7 +1,7 @@
 package com.jlshix.zigsys;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -9,16 +9,15 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.jlshix.zigsys.frag.Envir;
 import com.jlshix.zigsys.frag.Light;
 import com.jlshix.zigsys.frag.Msg;
+import com.jlshix.zigsys.frag.Others;
 import com.jlshix.zigsys.frag.Plug;
 import com.jlshix.zigsys.utils.L;
 
 import org.xutils.view.annotation.ContentView;
-import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 @ContentView(R.layout.activity_device)
@@ -40,6 +39,7 @@ public class DeviceActivity extends BaseActivity {
     private Envir envir;
     private Plug plug;
     private Light light;
+    private Others others;
     private Msg msg;
 
 
@@ -58,6 +58,7 @@ public class DeviceActivity extends BaseActivity {
         envir = new Envir();
         plug = new Plug();
         light = new Light();
+        others = new Others();
         msg = new Msg();
         vp.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -70,6 +71,8 @@ public class DeviceActivity extends BaseActivity {
                     case 2:
                         return light;
                     case 3:
+                        return others;
+                    case 4:
                         return msg;
                 }
                 return null;
@@ -77,7 +80,7 @@ public class DeviceActivity extends BaseActivity {
 
             @Override
             public int getCount() {
-                return 4;
+                return 5;
             }
 
             @Override
@@ -102,7 +105,7 @@ public class DeviceActivity extends BaseActivity {
 
             }
         });
-        vp.setOffscreenPageLimit(3);
+        vp.setOffscreenPageLimit(4);
         tabs.setupWithViewPager(vp);
     }
 
@@ -122,9 +125,22 @@ public class DeviceActivity extends BaseActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_add) {
+            Intent intent = new Intent(getApplicationContext(), AddDeviceActivity.class);
+            startActivityForResult(intent, L.ADD_REQUEST);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == L.ADD_REQUEST && resultCode == L.ADD_RETURN) {
+            // 发送广播 TODO 接收广播
+            Intent intent = new Intent("android.intent.action.MY_BROADCAST");
+            intent.putExtra("msg", "REFRESH");
+            sendBroadcast(intent);
+        }
     }
 }
