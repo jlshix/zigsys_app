@@ -78,7 +78,7 @@ public class GateBindActivity extends BaseActivity {
             L.toast(GateBindActivity.this, "信息不完整");
             return;
         }
-        RequestParams params = new RequestParams(L.URL_GATE_BIND + "?mail=" + L.MAIL + "&gate=" + gateImei1 + "&name=" + name1);
+        RequestParams params = new RequestParams(L.URL_GATE_BIND + "?mail=" + L.getMAIL() + "&gate=" + gateImei1 + "&name=" + name1);
         x.http().get(params, new Callback.CommonCallback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject result) {
@@ -87,7 +87,6 @@ public class GateBindActivity extends BaseActivity {
                         L.toast(GateBindActivity.this, "CODE_ERR");
                     } else {
                         // 绑定成功后设定配置文件内容
-                        L.setBIND(true);
                         L.setGateImei(gateImei1);
                         // 结束
                         GateBindActivity.this.setResult(L.ADD_RETURN);

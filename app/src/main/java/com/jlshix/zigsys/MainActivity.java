@@ -82,8 +82,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     private boolean positive = true;
     // 是否第一次启动 用于初始化spinner时不发命令
     private boolean isFirst = true;
-    // 是否已绑定设备，用于设定卡片的显示
-    private boolean bind = L.isBIND();
+
 
 
     // handler
@@ -279,7 +278,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
      * 更新网关数据
      */
     private void updateGate() {
-        RequestParams params = new RequestParams(L.URL_GATE + "?mail=" + L.MAIL);
+        RequestParams params = new RequestParams(L.URL_GATE + "?mail=" + L.getMAIL());
         x.http().get(params, new Callback.CommonCallback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject result) {
