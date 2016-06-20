@@ -27,11 +27,11 @@ public class App extends Application {
         x.Ext.setDebug(false);
 
         //JPush
-        JPushInterface.setDebugMode(false);
-        JPushInterface.init(this);
-        Set<String> tags = new HashSet<>();
-        tags.add("jlshix");
-        JPushInterface.setTags(getApplicationContext(), tags, null);
+//        JPushInterface.setDebugMode(false);
+//        JPushInterface.init(this);
+//        Set<String> tags = new HashSet<>();
+//        tags.add("jlshix");
+//        JPushInterface.setTags(getApplicationContext(), tags, null);
 
         sp = getSharedPreferences("conf", MODE_PRIVATE);
 

@@ -34,6 +34,8 @@ public class L {
     public static final int SCAN_REQUEST = 1000;
     public static final int SCAN_RETURN = 2000;
 
+    public static final int isLogin = App.sp.getInt("isLogin", -1);
+
 
     //请求网址
     public static String URL_GET_MSG = "http://jlshix.com/zigsys/get_msg.php/";
@@ -45,6 +47,9 @@ public class L {
     public static final java.lang.String URL_GATE = "http://jlshix.com/zigsys/get_gate.php/";
     public static final java.lang.String URL_GATE_BIND = "http://jlshix.com/zigsys/bind_gate.php/";
     public static final String URL_ADD_DEV = "http://jlshix.com/zigsys/add_dev.php/";
+    // TODO php 代码与数据库
+    public static final String URL_REG = "http://jlshix.com/zigsys/register.php/";
+    public static final String URL_LOGIN = "http://jlshix.com/zigsys/login.php/";
     /**
      * 客户端目前只有一个，设为zzh 后期可拓展
      */
@@ -52,6 +57,7 @@ public class L {
     public static String GATE_IMEI = "4718";
     public static boolean BIND = false;
     public static String MAIL = "jlshix@163.com";
+    public static String NAME = "jlshix";
 
     public static String getGateImei() {
         return App.sp.getString("gateImei", "x");
@@ -62,8 +68,12 @@ public class L {
         App.sp.edit().putString("gateImei", gateImei).apply();
     }
 
+
+
+
     public static boolean isBIND() {
-        return App.sp.getBoolean("bind", false);
+        String imei = getGateImei();
+        return imei.length() > 3;
     }
 
     public static void setBIND(boolean BIND) {
@@ -78,6 +88,15 @@ public class L {
     public static void setMAIL(String MAIL) {
         L.MAIL = MAIL;
         App.sp.edit().putString("mail", MAIL).apply();
+    }
+
+    public static String getNAME() {
+        return App.sp.getString("name", "x");
+    }
+
+    public static void setNAME(String NAME) {
+        L.NAME = NAME;
+        App.sp.edit().putString("name", NAME).apply();
     }
 
     public static String getGateTag() {

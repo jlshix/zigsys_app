@@ -39,6 +39,8 @@
     <string name="device_name_2">卧室-</string>
     <string name="device_name_3">书房-</string>
     <string name="device_type">设备类型: </string>
+    <string name="welcome">欢迎</string>
+    <string name="new_usr">新用户 ?</string>
 
     <array name="frag_title">
         <item>环境</item>
@@ -56,4 +58,14 @@
         <item>夜间模式</item>
     </string-array>
 
+    <string name="describ">图片描述</string>
+    <string name="mail">邮箱</string>
+    <string name="pw">密码</string>
+    <string name="error">错误</string>
+    <string name="login">登录</string>
+    <string name="success">成功</string>
+    <string name="name">用户名</string>
+    <string name="pw2">确认密码</string>
+    <string name="reg_error">注册失败</string>
+    <string name="register">注册</string>
 </resources>
