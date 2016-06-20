@@ -1,11 +1,16 @@
 package com.jlshix.zigsys;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+import com.jlshix.zigsys.utils.CaptureActivityAnyOrientation;
 import com.jlshix.zigsys.utils.L;
 
 import org.json.JSONException;
@@ -20,6 +25,7 @@ import org.xutils.x;
 @ContentView(R.layout.activity_gate_add)
 public class GateBindActivity extends BaseActivity {
 
+    private static final String TAG = "GATE_BIND_ACTIVITY";
     @ViewInject(R.id.gate_imei)
     private EditText gateImei;
 
@@ -65,7 +71,20 @@ public class GateBindActivity extends BaseActivity {
     // 扫描二维码
     @Event(R.id.scan)
     private void scanCode(View view) {
-        L.toast(GateBindActivity.this, "SCAN_CODE");
+        IntentIntegrator integrator = new IntentIntegrator(GateBindActivity.this);
+        integrator.setPrompt("请扫描设备生成的二维码").setCaptureActivity(CaptureActivityAnyOrientation.class)
+                .setOrientationLocked(true).initiateScan();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && result != null) {
+            String code = result.getContents();
+            Log.i(TAG, "onActivityResult: " + code);
+            gateImei.setText(code);
+        }
+
     }
 
     // 添加网关

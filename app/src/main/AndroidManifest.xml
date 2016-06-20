@@ -39,6 +39,13 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity"/>
 
+        <activity
+            android:name=".utils.CaptureActivityAnyOrientation"
+            android:screenOrientation="fullSensor"
+            android:stateNotNeeded="true"
+            android:theme="@style/zxing_CaptureTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
 
     </application>
 
