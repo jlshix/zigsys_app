@@ -50,7 +50,7 @@ public class AddDeviceActivity extends BaseActivity {
     private TextView devType;
 
     private String[] names = {
-            "客厅-", "卧室-", "书房-"
+            "客厅 - ", "卧室 - ", "书房 - "
     };
 
     private String gate = L.getGateImei();
@@ -68,13 +68,13 @@ public class AddDeviceActivity extends BaseActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.name0:
-                        gateName.setText(names[0]);
+                        gateName.setText(names[0] + devType.getText().toString());
                         break;
                     case R.id.name1:
-                        gateName.setText(names[1]);
+                        gateName.setText(names[1] + devType.getText().toString());
                         break;
                     case R.id.name2:
-                        gateName.setText(names[2]);
+                        gateName.setText(names[2] + devType.getText().toString());
                         break;
                 }
             }
@@ -94,7 +94,7 @@ public class AddDeviceActivity extends BaseActivity {
             @Override
             public void afterTextChanged(Editable s) {
 
-                if (s.length() == 15) {
+                if (s.length() == 12) {
                     gateAdd.setEnabled(true);
                 } else {
                     gateAdd.setEnabled(false);
