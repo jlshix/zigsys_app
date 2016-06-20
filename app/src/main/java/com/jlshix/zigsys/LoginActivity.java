@@ -20,7 +20,6 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 import java.util.HashSet;
 
-import cn.jpush.android.api.JPushInterface;
 
 
 @ContentView(R.layout.activity_login)
@@ -170,11 +169,11 @@ public class LoginActivity extends BaseActivity {
                             .putString("mail", userMail).putString("gateImei", gateImei)
                             .putString("pw", pw.getText().toString().trim()).apply();
 
-                    //极光推送Tag
-                    HashSet<String> tag = new HashSet<>();
-                    tag.add(userName);
+                    //TODO 极光推送Tag
+//                    HashSet<String> tag = new HashSet<>();
+//                    tag.add(userName);
 //                    JPushInterface.setTags(LoginActivity.this, tag, null);
-                    Log.e("TAG", "Jpush Tag Success");
+//                    Log.e("TAG", "Jpush Tag Success");
                     Thread.sleep(500);
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();

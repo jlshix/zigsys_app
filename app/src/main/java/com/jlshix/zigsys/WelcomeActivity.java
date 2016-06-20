@@ -4,12 +4,8 @@ import com.jlshix.zigsys.utils.L;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Window;
-import android.widget.Toast;
 
-import java.util.HashSet;
-import cn.jpush.android.api.JPushInterface;
 
 /**
  * 显示欢迎界面，判断是否登录，从sp中获取isLogin 得到 0:未登录，1:已登录, -1 默认值，第一次使用；
@@ -46,16 +42,17 @@ public class WelcomeActivity extends AppCompatActivity {
         if (isLogin == 1) {
             String u = App.sp.getString("name", "x");
             String p = App.sp.getString("pw","x");
-            if (!"x".equals(u) && !"x".equals(p)) {
-                //极光推送Tag
-                HashSet<String> tag = new HashSet<>();
-                tag.add(u);
-                JPushInterface.setTags(WelcomeActivity.this, tag, null);
-                Log.e("TAG", "Jpush Tag Success");
-
-            }else {
-                Toast.makeText(WelcomeActivity.this, "u_p ERR", Toast.LENGTH_SHORT).show();
-            }
+            //TODO 极光推送
+//            if (!"x".equals(u) && !"x".equals(p)) {
+//                //极光推送Tag
+//                HashSet<String> tag = new HashSet<>();
+//                tag.add(u);
+//                JPushInterface.setTags(WelcomeActivity.this, tag, null);
+//                Log.e("TAG", "Jpush Tag Success");
+//
+//            }else {
+//                Toast.makeText(WelcomeActivity.this, "u_p ERR", Toast.LENGTH_SHORT).show();
+//            }
 
             startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
             finish();
