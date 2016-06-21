@@ -23,6 +23,14 @@
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
+    <style name="ActivityCardStyle">
+        <item name="android:layout_marginTop">@dimen/card_padding</item>
+        <item name="android:clickable">false</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+    </style>
+
+
+
     <style name="ListCardStyle">
         <item name="android:clickable">true</item>
         <item name="android:foreground">?android:attr/selectableItemBackground</item>

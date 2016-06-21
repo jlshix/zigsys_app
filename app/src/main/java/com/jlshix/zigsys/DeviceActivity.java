@@ -138,8 +138,10 @@ public class DeviceActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == L.ADD_REQUEST && resultCode == L.ADD_RETURN) {
             // 发送广播 TODO 接收广播
+            String type = data.getStringExtra("type");
             Intent intent = new Intent("android.intent.action.MY_BROADCAST");
             intent.putExtra("msg", "REFRESH");
+            intent.putExtra("type", type);
             sendBroadcast(intent);
         }
     }

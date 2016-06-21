@@ -50,7 +50,7 @@ public class AddDeviceActivity extends BaseActivity {
     private TextView devType;
 
     private String[] names = {
-            "客厅 - ", "卧室 - ", "书房 - "
+            "客厅-", "卧室-", "书房-"
     };
 
     private String gate = L.getGateImei();
@@ -94,7 +94,7 @@ public class AddDeviceActivity extends BaseActivity {
             @Override
             public void afterTextChanged(Editable s) {
 
-                if (s.length() == 12) {
+                if (s.length() == L.DEV_IMEI_LENGTH) {
                     gateAdd.setEnabled(true);
                 } else {
                     gateAdd.setEnabled(false);
@@ -165,19 +165,19 @@ public class AddDeviceActivity extends BaseActivity {
     // 添加网关
     @Event(R.id.btn_add_gate)
     private void addDevice(View view) {
-        L.toast(AddDeviceActivity.this, "ADD_DEVICE");
+//        L.toast(AddDeviceActivity.this, "ADD_DEVICE");
 
         /**
          * imei 示例
-         * 201302010809001
-         * 012345678901234
-         * 0123 45 67 89 01234
-         * 年份4类型2编号2批号2编号5
+         * 201302010809
+         * 012345678901
+         * 0123 45 67 8901
+         * 年份4类型2编号2编号4 总计12
          */
         final String gateImei1 = gateImei.getText().toString();
 
-        String name1 = gateName.getText().toString();
-        if (gateImei1.length() != 15 || name1.length() == 0) {
+        final String name1 = gateName.getText().toString();
+        if (gateImei1.length() != L.DEV_IMEI_LENGTH || name1.length() == 0) {
             L.toast(AddDeviceActivity.this, "信息不完整");
             return;
         }
@@ -190,15 +190,21 @@ public class AddDeviceActivity extends BaseActivity {
         x.http().get(params, new Callback.CommonCallback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject result) {
+                if (L.DEBUG) {
+                    L.toast(AddDeviceActivity.this, result.toString());
+                }
                 try {
                     if (!result.getString("code").equals("1")) {
                         L.toast(AddDeviceActivity.this, "CODE_ERR");
                     } else {
 
                         // 结束
-                        AddDeviceActivity.this.setResult(L.ADD_RETURN);
+                        Intent intent = new Intent();
+                        intent.putExtra("type", type);
+                        intent.putExtra("name", name1);
+                        intent.putExtra("state", state);
+                        AddDeviceActivity.this.setResult(L.ADD_RETURN, intent);
                         AddDeviceActivity.this.finish();
-
                     }
 
                 } catch (JSONException e) {
