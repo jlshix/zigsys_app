@@ -58,6 +58,7 @@ public class Plug extends BaseFragment implements SwipeRefreshLayout.OnRefreshLi
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case REFRESH:
+                    swipe.setRefreshing(true);
                     getData();
                     swipe.setRefreshing(false);
                     break;
@@ -105,7 +106,7 @@ public class Plug extends BaseFragment implements SwipeRefreshLayout.OnRefreshLi
                             }
                             json2List(object.optJSONArray("info"));
                             adapter.notifyDataSetChanged();
-                            adapter.notifyItemRangeChanged(0, list.size());
+//                            adapter.notifyItemRangeChanged(0, list.size());
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -143,7 +144,6 @@ public class Plug extends BaseFragment implements SwipeRefreshLayout.OnRefreshLi
 
     @Override
     public void onRefresh() {
-        swipe.setRefreshing(true);
         handler.sendEmptyMessage(REFRESH);
     }
 }

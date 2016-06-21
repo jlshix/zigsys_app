@@ -29,6 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="36dp" />
             <TextView
+                android:visibility="gone"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:paddingTop="5dp"
                 android:id="@+id/statistics"

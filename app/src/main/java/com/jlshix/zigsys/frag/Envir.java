@@ -1,9 +1,14 @@
 package com.jlshix.zigsys.frag;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -93,6 +98,10 @@ public class Envir extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
                     @Override
                     public void onSuccess(String result) {
                         try {
+                            // DEBUG
+                            if (L.DEBUG) {
+                                L.toast(getContext(), result);
+                            }
                             JSONObject object = new JSONObject(result);
                             if (!object.optString("code").equals("1")) {
                                 L.toast(getContext(), "PLUG_CODE_ERR");
@@ -100,7 +109,6 @@ public class Envir extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
                             }
                             json2List(object.optJSONArray("info"));
                             adapter.notifyDataSetChanged();
-                            adapter.notifyItemRangeChanged(0, list.size());
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -136,7 +144,11 @@ public class Envir extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
 
     @Override
     public void onRefresh() {
-        swipe.setRefreshing(true);
         handler.sendEmptyMessage(REFRESH);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }
