@@ -28,6 +28,7 @@ import java.text.DecimalFormat;
  */
 public class L {
 
+
     private static final String TAG = "UTIL_L";
     public static final int ADD_REQUEST = 1000;
     public static final int ADD_RETURN = 2000;
@@ -35,6 +36,18 @@ public class L {
     public static final int SCAN_RETURN = 2000;
 
     public static final int isLogin = App.sp.getInt("isLogin", -1);
+
+    public static final boolean DEBUG = false;
+
+    /**
+     * 客户端目前只有一个，设为zzh 后期可拓展
+     */
+    public static String GATE_TAG = "zzh";
+    public static String GATE_IMEI = "4718";
+    public static boolean BIND = false;
+    public static String MAIL = "jlshix@163.com";
+    public static String NAME = "jlshix";
+    public static int DEV_IMEI_LENGTH = 12;
 
 
     //请求网址
@@ -50,14 +63,9 @@ public class L {
     // TODO php 代码与数据库
     public static final String URL_REG = "http://jlshix.com/zigsys/register.php/";
     public static final String URL_LOGIN = "http://jlshix.com/zigsys/login.php/";
-    /**
-     * 客户端目前只有一个，设为zzh 后期可拓展
-     */
-    public static String GATE_TAG = "zzh";
-    public static String GATE_IMEI = "4718";
-    public static boolean BIND = false;
-    public static String MAIL = "jlshix@163.com";
-    public static String NAME = "jlshix";
+    public static final String URL_UNBIND = "http://jlshix.com/zigsys/unbind_gate.php/?mail=" + getMAIL();
+
+
 
     public static String getGateImei() {
         return App.sp.getString("gateImei", "x");
@@ -208,5 +216,36 @@ public class L {
             return longitude + "," + latitude;
         }
         return mDefault;
+    }
+
+    public static void unbindGate(final Context c) {
+        RequestParams params = new RequestParams(URL_UNBIND);
+        x.http().get(params, new Callback.CommonCallback<JSONObject>() {
+            @Override
+            public void onSuccess(JSONObject result) {
+                if (result.optString("code").equals("1")) {
+                    L.toast(c, "已解除网关绑定， 请点击 + 按钮添加新设备");
+                    // 清除本地数据
+                    setGateImei("x");
+                } else {
+                    L.toast(c, "UNBIND_CODE_ERR");
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                L.toast(c, "UNBIND_ERR: " + ex.getMessage() );
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
     }
 }
