@@ -1,11 +1,13 @@
 package com.jlshix.zigsys;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -92,6 +94,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case REFRESH:
+                    showCard();
                     updateWeather();
                     if (L.isBIND()) {
                         updateGate();
@@ -115,13 +118,6 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         swipe.setOnRefreshListener(this);
         spinner.setAdapter(new ArrayAdapter<>(this, R.layout.spinner,
                 getResources().getStringArray(R.array.mode)));
-//        spinner.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                positive = true;
-//                Log.e(TAG, "onClick: " + positive);
-//            }
-//        });
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -192,6 +188,24 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     private void toDeviceActivity(View v) {
         Intent intent = new Intent(MainActivity.this, DeviceActivity.class);
         startActivity(intent);
+    }
+
+    @Event(value = R.id.device, type = View.OnLongClickListener.class)
+    private boolean ubindGate(View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setMessage("确认解绑网关？").setPositiveButton("确认", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                L.unbindGate(MainActivity.this);
+                showCard();
+            }
+        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        }).create().show();
+        return true;
     }
 
 
